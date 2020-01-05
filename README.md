@@ -4,12 +4,17 @@ Emulator menu for cordova and ionic projects.
 
 It's a menu selection for `cordova emulate` or `ionic cordova emulate` (it auto-detects ionic projects). Allow selecting the target using a user-friendly menu, very useful for testing on multiple os/devices. 
 
+## Installation
+
 Install by running: `npm install cordova-emulator -g`
 
 If you are using nvm and old node versions, you might get an error similar to the following  when trying to run the first time: /usr/local/bin/cordova-emulator: No such file or directory
 
 If that happens you need to re-select your node version to update path. It happened when used it with a node 6.12.1 / ionic1 project. I needed to reload, not needed with node 10/12.
 
+
+## Usage
+Run the command `cordova-emulator` in a cordova/ionic project root folder (same place as you would run cordova emulate).
 
 ```shell
 $ cordova-emulator 
