@@ -3,6 +3,7 @@
 const cliSelect = require("cli-select");
 const chalk = require("chalk");
 const fs = require("fs");
+const spawn = require('child_process').spawnSync;
 
 const commandArgs = process.argv.slice(2).join(' ').trim();
 const isIonic = fs.existsSync('./ionic.config.json');
@@ -51,23 +52,11 @@ const selectEmulatorIOS = (runtime) => {
         const udid = response.value.udid;
         const emulatorCommand = `${prefix} cordova emulate ios --target="${udid}" ${commandArgs}`;
         console.log(`executing: ${emulatorCommand}`);
-        const spawn = require('child_process').spawnSync;
-        const ls = spawn(emulatorCommand, {
+        spawn(emulatorCommand, {
             stdio: 'inherit',
             shell: true
         });
-        console.log(ls);
-
-        setTimeout(() => {
-            console.log(ls);
-            ls.stdout.on('data', (data) => {
-                console.log(`stdout: ${data}`);
-            });
-
-            ls.on('exit', () => {
-                console.log('Emulator exited');
-            });
-        }, 5000);
+        
     });
 };
 
@@ -76,14 +65,9 @@ const selectEmulatorAndroid = (emulatorImages, platform) => {
         values: emulatorImages,
         valueRenderer: (value, selected) => defaultValueRenderer(value, selected)
     }).then((response) => {
-        const spawn = require('child_process').spawn;
-        const ls = spawn(`${prefix} cordova emulate ${platform} --target="${response.value}" ${commandArgs}`, {
+        spawn(`${prefix} cordova emulate ${platform} --target="${response.value}" ${commandArgs}`, {
             stdio: 'inherit',
             shell: true
-        });
-
-        ls.on('exit', () => {
-            console.log('Emulator exited');
         });
     });
 };
